@@ -1,0 +1,6 @@
+if(NOT TARGET CXBase::CXBase)
+    find_package(LuaCJson)
+    find_package(EZIO)
+    find_package(Nlohmann)
+    include("${CMAKE_CURRENT_LIST_DIR}/CXBaseTargets.cmake")
+endif()
