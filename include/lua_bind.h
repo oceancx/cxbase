@@ -5,6 +5,8 @@ extern "C" {
 #include <lualib.h>
 #include <lauxlib.h>
 }
+#include <functional>
+#include <vector>
 
 template <typename Ret, typename... Args>
 Ret callfunc(std::function<Ret(Args...)> func, std::vector<any> anyargs);
@@ -182,5 +184,6 @@ std::vector<any> call_lua_function(lua_State*L, char const* func, Ts... args)
 	return rets;
 }
 
-
-
+#define script_system_register_function(L, fn) lua_register_function(L, fn)
+#define script_system_register_luac_function(L, fn) (lua_pushcfunction(L, (fn)), lua_setglobal(L, #fn))
+#define script_system_call_function(L, ...) call_lua_function(L, __VA_ARGS__)

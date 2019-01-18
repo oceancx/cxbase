@@ -1,10 +1,5 @@
 #pragma once
-extern "C"
-{
-#include <lua.h>
-#include <lualib.h>
-#include <lauxlib.h>
-}
+#include "lua_bind.h"
 #include "ezio/tcp_connection.h"
 
 void lua_push_tcp_connection(lua_State*L,const ezio::TCPConnectionPtr& conn);

@@ -1,5 +1,7 @@
 #pragma once
-#include "defines.h"
+#include "lua_bind.h"
+#include <nlohmann/json.hpp>
+
 #define MAIN_THREAD_ID 2
 
 namespace vs

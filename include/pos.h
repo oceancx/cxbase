@@ -1,5 +1,4 @@
 #pragma once
-#include "defines.h"
 struct Pos
 {
     float x,y;
@@ -14,12 +13,12 @@ struct Pos
 
 struct IntPos
 {
-	int32 x, y;
+	int x, y;
 };
 
 struct BoxPos
 {
-	int32 x, y;
+	int x, y;
 };
 
 struct Bound

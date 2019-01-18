@@ -30,7 +30,7 @@ int NetThreadQueue::Size(int q)
 {
 	assert(checkq(q));
 	m_Locks[q].lock();
-	int size = m_Queues[q].size();
+	int size = (int)m_Queues[q].size();
 	m_Locks[q].unlock();
 	return size;
 }
@@ -67,7 +67,7 @@ NetThreadQueue* lua_check_net_thread_queue(lua_State*L, int index)
 int net_thread_queue_push_back(lua_State* L)
 {
 	auto* ptr = lua_check_net_thread_queue(L, 1);
-	int q = lua_tointeger(L, 2);
+	int q = (int)lua_tointeger(L, 2);
 	const char* msg = lua_tostring(L, 3);
 	ptr->PushBack(q, msg);
 	return 0;
@@ -76,7 +76,7 @@ int net_thread_queue_push_back(lua_State* L)
 int net_thread_queue_pop_front(lua_State* L)
 {
 	auto* ptr = lua_check_net_thread_queue(L, 1);
-	int q = lua_tointeger(L, 2);
+	int q = (int)lua_tointeger(L, 2);
 	ptr->PopFront(q);
 	return 0;
 }
@@ -85,8 +85,8 @@ int net_thread_queue_pop_front(lua_State* L)
 int net_thread_queue_front(lua_State* L)
 {
 	auto* ptr = lua_check_net_thread_queue(L, 1);
-	int q = lua_tointeger(L, 2);
-	auto& msg = ptr->Front(q);
+	int q = (int)lua_tointeger(L, 2);
+	auto msg = ptr->Front(q);
 	lua_pushstring(L, msg.c_str());
 	return 1;
 }
@@ -94,7 +94,7 @@ int net_thread_queue_front(lua_State* L)
 int net_thread_queue_size(lua_State* L)
 {
 	auto* ptr = lua_check_net_thread_queue(L, 1);
-	int q = lua_tointeger(L, 2);
+	int q = (int)lua_tointeger(L, 2);
 	int size = ptr->Size(q);
 	lua_pushinteger(L, size);
 	return 1;
@@ -103,7 +103,7 @@ int net_thread_queue_size(lua_State* L)
 int net_thread_queue_empty(lua_State* L)
 {
 	auto* ptr = lua_check_net_thread_queue(L, 1);
-	int q = lua_tointeger(L, 2);
+	int q = (int)lua_tointeger(L, 2);
 	bool empty = ptr->Empty(q);
 	lua_pushboolean(L, empty);
 	return 1;
@@ -112,7 +112,7 @@ int net_thread_queue_empty(lua_State* L)
 int net_thread_queue_clear(lua_State* L)
 {
 	auto* ptr = lua_check_net_thread_queue(L, 1);
-	int q = lua_tointeger(L, 2);
+	int q = (int)lua_tointeger(L, 2);
 	ptr->Clear(q);
 	return 0;
 }

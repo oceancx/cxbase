@@ -36,7 +36,7 @@ int tcp_connection_cleanup(lua_State* L)
 	LuaTcpConnection* conn = (LuaTcpConnection*)lua_touserdata(L, 1);
 	free(conn);
 	conn = nullptr;
-	printf("TCPConnection :%d\n");
+	printf("TCPConnection cleanup\n");
 	return 0;
 }
 
@@ -80,7 +80,7 @@ int buffer_readablesize(lua_State* L)
 int buffer_preview(lua_State* L)
 {
 	Buffer* buffer = (Buffer*)lua_check_buffer(L, 1);
-	int len = lua_tointeger(L, 2);
+	int len = (int)lua_tointeger(L, 2);
 	luaL_Buffer lbuf;
 	luaL_buffinitsize(L, &lbuf, len);
 	luaL_addlstring(&lbuf, buffer->Peek(), len);
@@ -91,7 +91,7 @@ int buffer_preview(lua_State* L)
 int buffer_consume(lua_State* L)
 {
 	Buffer* buffer = (Buffer*)lua_check_buffer(L, 1);
-	int len = lua_tointeger(L, 2);
+	int len = (int)lua_tointeger(L, 2);
 	buffer->Consume(len);
 	return 0;
 }
@@ -99,7 +99,7 @@ int buffer_consume(lua_State* L)
 int buffer_readstring(lua_State* L)
 {
 	Buffer* buffer = (Buffer*)lua_check_buffer(L, 1);
-	int len = lua_tointeger(L, 2);
+	int len = (int)lua_tointeger(L, 2);
 	lua_pushlstring(L,buffer->Peek(),len);
 	buffer->Consume(len);
 	return 1;
@@ -127,7 +127,7 @@ int buffer_gc(lua_State* L)
 	LuaEzioBuffer* buf = (LuaEzioBuffer*)lua_touserdata(L, 1);
 	free(buf);
 	buf = nullptr;
-	printf("TCPConnection :%d\n");
+	printf("TCPConnection :gc\n");
 	return 0;
 }
 
