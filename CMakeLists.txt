@@ -44,7 +44,10 @@ target_include_directories(cxbase
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
+
+set_target_properties(cxbase PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch/precompile.h")
+cotire(cxbase)
+
 target_link_libraries(cxbase PUBLIC EZIO::EZIO LuaCJson::LuaCJson Nlohmann NESupport::NESupport glm)
 
-include(cmake/HelperMacroFunction.cmake)
 export_library_macro(cxbase CXBase CXBase:: lib/cmake/cxbase)

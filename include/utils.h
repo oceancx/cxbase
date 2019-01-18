@@ -18,3 +18,14 @@ inline void SafeDelete(T * &pointer)
 		pointer = nullptr;
 	}
 }
+
+namespace utils
+{
+template <typename T>
+static std::string Int2Hex(T i)
+{
+	std::stringstream stream;
+	stream << "0x" << std::hex << i;
+	return stream.str();
+}
+} // namespace utils
