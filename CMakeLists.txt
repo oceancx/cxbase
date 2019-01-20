@@ -5,8 +5,7 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/dist CACHE PATH "..." FORCE)
 endif()
 
-find_package(LuaCJson)
-find_package(EZIO)
+find_package(CXLua)
 find_package(NESupport)
 find_package(Nlohmann)
 find_package(glm)
@@ -22,8 +21,6 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/include PREFIX "Header Files\\incl
 add_library(cxbase
     ${SOURCES_HEADER_PUB}
     ${SOURCES_HEADER_RPI}
-    src/lua_net.cpp
-    src/net_thread_queue.cpp
     src/utils.cpp
     src/cxmath.cpp
     src/cxrandom.cpp
@@ -48,6 +45,6 @@ target_include_directories(cxbase
 set_target_properties(cxbase PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch/precompile.h")
 cotire(cxbase)
 
-target_link_libraries(cxbase PUBLIC EZIO::EZIO LuaCJson::LuaCJson Nlohmann NESupport::NESupport glm)
+target_link_libraries(cxbase PUBLIC CXLua::CXLua  Nlohmann NESupport::NESupport glm)
 
 export_library_macro(cxbase CXBase CXBase:: lib/cmake/cxbase)
