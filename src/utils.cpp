@@ -1,4 +1,5 @@
 #include "utils.h"
+#if defined(_WIN32)
 #include <windows.h>
 
 namespace utils
@@ -58,3 +59,33 @@ namespace utils
 		return str1;
 	}
 }
+#else
+#include <locale>
+#include <codecvt>
+#include <string>
+std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+
+namespace utils
+{
+
+	std::string Utf8ToGB2312(const char* utf8)
+	{
+		return std::string(utf8);
+	}
+
+	std::string GB2312ToUtf8(const char* gb2312)
+	{
+		return std::string(gb2312);
+	}
+
+	std::wstring StringToWstring(const std::string str)
+	{
+		return converter.from_bytes(str);
+	}
+
+	std::string WstringToString(const std::wstring str)
+	{
+		return converter.to_bytes(str);
+	}
+}
+#endif
