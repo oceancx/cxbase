@@ -45,6 +45,7 @@ target_include_directories(cxbase
 set_target_properties(cxbase PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch/precompile.h")
 cotire(cxbase)
 
+target_compile_features(cxbase PUBLIC cxx_std_11)
 target_link_libraries(cxbase PUBLIC CXLua::CXLua  Nlohmann NESupport::NESupport glm)
 
 export_library_macro(cxbase CXBase CXBase:: lib/cmake/cxbase)
