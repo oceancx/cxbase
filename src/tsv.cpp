@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 using String = std::string;
+using Json = nlohmann::json;
 namespace utils
 {
 	tsv::tsv(String path) 
@@ -70,118 +71,113 @@ namespace utils
 		if (s == "")return 0;
 		return std::stoul(s, 0, 16);
 	}
-
-
 }
-//
-//int utils_parse_tsv_file(lua_State*L )
-//{
-//	const char* name = luaL_checklstring(L, 1, NULL);
-//
-//	std::string path = FileSystem::GetTablePath(name);
-//	std::ifstream fs(path);
-//	if (!fs)
-//	{
-//		LOG_ERR("utils_parse_tsv_file read file error!");
-//		return 0;
-//	};
-//
-//	fs.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-//	std::stringstream  ss;
-//	ss << fs.rdbuf();
-//	fs.close();
-//
-//	std::string file_content = ss.str();
-//	std::vector<std::string> rows = utils::split(file_content, '\n');
-//	if (rows.size() > 0)
-//	{
-//		std::vector<std::string> keys = utils::split(rows[0], '\t');
-//		if (keys.size() > 0)
-//		{
-//			Json tsv_parsed_rows = Json();
-//			int tsv_index = 1;
-//			for (size_t i = 1; i < rows.size(); i++)
-//			{
-//				if(rows[i][0] == '*')continue;
-//				Json& tsv_row = tsv_parsed_rows[std::to_string(tsv_index++)];
-//				std::vector<std::string> vals = utils::split(rows[i], '\t');
-//				assert(keys.size() == vals.size());
-//				
-//				for (size_t j = 0; j < keys.size(); j++)
-//				{
-//					tsv_row[keys[j]] = vals[j];
-//				}
-//			}
-//			lua_pushstring(L, tsv_parsed_rows.dump().c_str());
-//			return 1;
-//		}
-//	}
-//	
-//	return 0;
-//}
-//
-//void utils_resave_tsv_file(const char* name)
-//{	
-//	std::string path = FileSystem::GetTablePath(name);
-//	std::ifstream fs(path);
-//	if (!fs)
-//	{
-//		LOG_ERR("read file error!");
-//		return ;
-//	};
-//
-//	fs.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-//	std::stringstream  ss;
-//	ss << fs.rdbuf();
-//	fs.close();
-//
-//	std::string file_content = ss.str();
-//	std::vector<std::string> rows = utils::split(file_content, '\n');
-//	if (rows.size() > 0)
-//	{
-//		std::vector<std::string> keys = utils::split(rows[0], '\t');
-//		if (keys.size() > 0)
-//		{
-//			std::vector<std::map<std::string, std::string>> parsedRows;
-//			for (size_t i = 1; i < rows.size(); i++)
-//			{
-//				if (rows[i][0] == '*')continue;
-//				std::map<std::string, std::string> parsedRow;		
-//				std::vector<std::string> vals = utils::split(rows[i], '\t');
-//				assert(keys.size() == vals.size());
-//
-//				for (size_t j = 0; j < keys.size(); j++)
-//				{
-//					parsedRow[keys[j]] = vals[j];
-//				}
-//				parsedRows.push_back(parsedRow);
-//			}
-//			std::sort(parsedRows.begin(), parsedRows.end(), [](std::map<std::string, std::string>& lhs, std::map<std::string, std::string>& rhs) {
-//				return lhs["name"] < rhs["name"];
-//			});
-//			std::ofstream newfs(path);
-//			newfs << rows[0] << '\n';		//write keys
-//			for (size_t i = 0; i < parsedRows.size(); i++)
-//			{
-//				bool first = true;
-//				for (auto& it : parsedRows[i])
-//				{
-//					if (first)
-//					{
-//						first = false;
-//						newfs << it.second;
-//					}
-//					else
-//					{
-//						newfs << '\t' << it.second;
-//					}
-//				}
-//				newfs << '\n';
-//			}
-//			newfs.close();
-//		}
-//	}
-//}
+
+int utils_parse_tsv_file(lua_State*L )
+{
+	const char* path = luaL_checklstring(L, 1, NULL);
+	std::ifstream fs(path);
+	if (!fs)
+	{
+		printf("utils_parse_tsv_file read file error!");
+		return 0;
+	};
+
+	fs.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	std::stringstream  ss;
+	ss << fs.rdbuf();
+	fs.close();
+
+	std::string file_content = ss.str();
+	std::vector<std::string> rows = utils::split(file_content, '\n');
+	if (rows.size() > 0)
+	{
+		std::vector<std::string> keys = utils::split(rows[0], '\t');
+		if (keys.size() > 0)
+		{
+			Json tsv_parsed_rows = Json();
+			int tsv_index = 1;
+			for (size_t i = 1; i < rows.size(); i++)
+			{
+				if(rows[i][0] == '*')continue;
+				Json& tsv_row = tsv_parsed_rows[std::to_string(tsv_index++)];
+				std::vector<std::string> vals = utils::split(rows[i], '\t');
+				assert(keys.size() == vals.size());
+				
+				for (size_t j = 0; j < keys.size(); j++)
+				{
+					tsv_row[keys[j]] = vals[j];
+				}
+			}
+			lua_pushstring(L, tsv_parsed_rows.dump().c_str());
+			return 1;
+		}
+	}
+	
+	return 0;
+}
+
+void utils_resave_tsv_file(const char* path)
+{	
+	std::ifstream fs(path);
+	if (!fs)
+	{
+		printf("read file error!");
+		return ;
+	};
+
+	fs.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	std::stringstream  ss;
+	ss << fs.rdbuf();
+	fs.close();
+
+	std::string file_content = ss.str();
+	std::vector<std::string> rows = utils::split(file_content, '\n');
+	if (rows.size() > 0)
+	{
+		std::vector<std::string> keys = utils::split(rows[0], '\t');
+		if (keys.size() > 0)
+		{
+			std::vector<std::map<std::string, std::string>> parsedrows;
+			for (size_t i = 1; i < rows.size(); i++)
+			{
+				if (rows[i][0] == '*')continue;
+				std::map<std::string, std::string> parsedrow;		
+				std::vector<std::string> vals = utils::split(rows[i], '\t');
+				assert(keys.size() == vals.size());
+
+				for (size_t j = 0; j < keys.size(); j++)
+				{
+					parsedrow[keys[j]] = vals[j];
+				}
+				parsedrows.push_back(parsedrow);
+			}
+			std::sort(parsedrows.begin(), parsedrows.end(), [](std::map<std::string, std::string>& lhs, std::map<std::string, std::string>& rhs) {
+				return lhs["name"] < rhs["name"];
+			});
+			std::ofstream newfs(path);
+			newfs << rows[0] << '\n';		//write keys
+			for (size_t i = 0; i < parsedrows.size(); i++)
+			{
+				bool first = true;
+				for (auto& it : parsedrows[i])
+				{
+					if (first)
+					{
+						first = false;
+						newfs << it.second;
+					}
+					else
+					{
+						newfs << '\t' << it.second;
+					}
+				}
+				newfs << '\n';
+			}
+			newfs.close();
+		}
+	}
+}
 
 //0不是number 1是整数 2是浮点数
 int utils_str_is_number(const std::string& str)
@@ -204,79 +200,79 @@ int utils_str_is_number(const std::string& str)
 	}
 }
 
-//
-//int utils_parse_tsv_file_as_table(lua_State*L)
-//{
-//	const char* name = luaL_checkstring(L, 1);
-//	bool parse_val_type= lua_toboolean(L, 2);
-//
-//	std::string path = FileSystem::GetTablePath(name);
-//	std::ifstream fs(path);
-//	if (!fs)
-//	{
-//		LOG_ERR("utils_parse_tsv_file read file error!");
-//		return 0;
-//	};
-//
-//	fs.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-//	std::stringstream  ss;
-//	ss << fs.rdbuf();
-//	fs.close();
-//
-//	std::string file_content = ss.str();
-//	std::vector<std::string> rows = utils::split(file_content, '\n');
-//	
-//	if (rows.size() > 0)
-//	{
-//		std::vector<std::string> keys = utils::split(rows[0], '\t');
-//		//generate a new table
-//		lua_newtable(L);
-//		int table_index = 1;
-//		for (size_t i = 1; i < rows.size(); i++)
-//		{
-//			if (rows[i][0] == '*')continue;
-//			//generate a row
-//			std::vector<std::string> vals = utils::split(rows[i], '\t');
-//			assert(keys.size() == vals.size());
-//			lua_pushinteger(L, table_index++);
-//			lua_newtable(L);
-//			for (size_t j = 0; j < keys.size() && j < vals.size(); j++)
-//			{
-//				const auto& key = keys[j];
-//				const auto& val = vals[j];
-//				if (parse_val_type)
-//				{
-//					int val_type = utils_str_is_number(val);
-//					if (val_type == 0)
-//					{
-//						lua_pushargs(L, val.c_str());
-//					}
-//					else if (val_type == 1)
-//					{
-//						lua_pushargs(L, std::atoi(val.c_str()));
-//					}
-//					else if (val_type == 2)
-//					{
-//						lua_pushargs(L, std::atof(val.c_str()));
-//					}
-//				}
-//				else
-//				{
-//					lua_pushargs(L, val.c_str());
-//				}
-//
-//				lua_setfield(L, -2, key.c_str());
-//			}
-//			lua_settable(L, -3);
-//		}
-//		return 1;
-//	}
-//	else
-//	{
-//		return 0;
-//	}
-//
-//}
+
+int utils_parse_tsv_file_as_table(lua_State*L)
+{
+	const char* path = luaL_checkstring(L, 1);
+	bool parse_val_type= lua_toboolean(L, 2);
+
+	
+	std::ifstream fs(path);
+	if (!fs)
+	{
+		printf("utils_parse_tsv_file read file error!");
+		return 0;
+	};
+
+	fs.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	std::stringstream  ss;
+	ss << fs.rdbuf();
+	fs.close();
+
+	std::string file_content = ss.str();
+	std::vector<std::string> rows = utils::split(file_content, '\n');
+	
+	if (rows.size() > 0)
+	{
+		std::vector<std::string> keys = utils::split(rows[0], '\t');
+		//generate a new table
+		lua_newtable(L);
+		int table_index = 1;
+		for (size_t i = 1; i < rows.size(); i++)
+		{
+			if (rows[i][0] == '*')continue;
+			//generate a row
+			std::vector<std::string> vals = utils::split(rows[i], '\t');
+			lua_pushinteger(L, table_index++);
+			lua_newtable(L);
+			for (size_t j = 0; j < keys.size() ; j++)
+			{
+				const auto& key = keys[j];
+				const auto& val = (j < vals.size()) ? vals[j] : std::string("");
+				
+				if (parse_val_type)
+				{
+					int val_type = utils_str_is_number(val);
+					if (val_type == 0)
+					{
+						lua_pushargs(L, val.c_str());
+					}
+					else if (val_type == 1)
+					{
+						lua_pushargs(L, std::atoi(val.c_str()));
+					}
+					else if (val_type == 2)
+					{
+						lua_pushargs(L, std::atof(val.c_str()));
+					}
+				}
+				else
+				{
+					lua_pushargs(L, val.c_str());
+				}
+
+				lua_setfield(L, -2, key.c_str());
+			}
+			lua_settable(L, -3);
+		}
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+
+}
 
 int utils_str_split(lua_State*L)
 {
@@ -374,13 +370,12 @@ int utils_file_write(lua_State*L)
 
 void luaopen_tsv(lua_State* L)
 {
-	//script_system_register_luac_function(L, utils_parse_tsv_file);
-	//script_system_register_luac_function(L, utils_parse_tsv_file_as_table);
+	script_system_register_luac_function(L, utils_parse_tsv_file);
+	script_system_register_luac_function(L, utils_parse_tsv_file_as_table);
 	script_system_register_luac_function(L, utils_str_split);
 	script_system_register_luac_function(L, utils_file_open);
 	script_system_register_luac_function(L, utils_file_close);
 	script_system_register_luac_function(L, utils_file_write);
-	//script_system_register_function(L, utils_resave_tsv_file);
-	
+	script_system_register_function(L, utils_resave_tsv_file);
 }
 
