@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
 #include <sstream>
+#include <nlohmann/json.hpp>
 using Vec3 = glm::vec3;
 using Vec4 = glm::vec4;
 using Vec2 = glm::vec2;
