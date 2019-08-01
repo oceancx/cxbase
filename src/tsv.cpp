@@ -10,7 +10,7 @@ namespace utils
 		std::ifstream fs(path);
 		if (!fs)
 		{
-			//LOG_ERR("tsv(String path) error!");
+			//cxlog_err("tsv(String path) error!");
 			return;
 		};
 
