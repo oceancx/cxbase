@@ -4,7 +4,8 @@
 
 enum EProtocalType
 {
-	PTO_C2S_LOGIN = 0,
+	PTO_C2S_SIGNUP = 0,
+	PTO_C2S_LOGIN , 
 	PTO_C2S_LOGOUT,
 	PTO_C2S_MOVE_TO_POS,
 	PTO_C2S_CHAT,
