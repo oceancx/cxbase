@@ -21,6 +21,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/include PREFIX "Header Files\\incl
 add_library(cxbase
     ${SOURCES_HEADER_PUB}
     ${SOURCES_HEADER_RPI}
+	src/protocol.cpp
     src/utils.cpp
     src/cxmath.cpp
     src/cxrandom.cpp
