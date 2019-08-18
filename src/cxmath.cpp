@@ -1,22 +1,8 @@
 #include "cxmath.h"
 #include <cmath>
 #include <iostream>
+#include "define_types.h"
 
-class Direction
-{
-  public:
-	enum Dir
-	{
-		N = 6,
-		S = 4,
-		W = 5,
-		E = 7,
-		N_E = 3,
-		N_W = 2,
-		S_E = 0,
-		S_W = 1,
-	};
-};
 
 float GMath::Astar_GetDistance(float sx, float sy, float ex, float ey)
 {
