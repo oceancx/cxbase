@@ -56,8 +56,11 @@ namespace utils
 
 	inline std::vector<std::string> split_by_cnt(const std::string &s, char delim, int fixcnt) {
 		auto elems = split_by_cuts(s, delim);
+		
 		while ((int)elems.size() < fixcnt)
 			elems.push_back("");
+		while ((int)elems.size() > fixcnt)
+			elems.pop_back();
 		return elems;
 	}
 
