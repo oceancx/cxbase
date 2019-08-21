@@ -49,11 +49,11 @@ namespace utils
 				Rows.push_back(tsvrow);
 			}
 		}
-		/*MapRows.clear();
+		MapRows.clear();
 		for (auto row: Rows)
 		{
 			MapRows.insert({ row["ID"], row });
-		}*/
+		}
 		
 		//nlohmann::json json = nlohmann::json::array();
 		//json = tabRows;

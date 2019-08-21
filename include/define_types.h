@@ -19,6 +19,7 @@ using Mat4 = glm::mat4;
 using Mat2 = glm::mat2;
 
 using String = std::string;
+using CXString = std::string;
 using Json = nlohmann::json;
 
 typedef int64_t int64;
@@ -81,6 +82,18 @@ public:
 		S_E = 0,
 		S_W = 1,
 	};
+};
+
+enum EDir
+{
+	DIR_N = 6,
+	DIR_S = 4,
+	DIR_W = 5,
+	DIR_E = 7,
+	DIR_NE = 3,
+	DIR_NW = 2,
+	DIR_SE = 0,
+	DIR_SW = 1,
 };
 enum ActionEnums
 {
