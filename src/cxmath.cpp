@@ -132,6 +132,21 @@ int GMath::Astar_GetDir4(float degree)
 	return 0;
 }
 
+int GMath::GetReverseDir(int dir)
+{
+	switch (dir)
+	{
+	case 6: dir = 4; break;
+	case 4: dir = 6; break;
+	case 5: dir = 7; break;
+	case 7: dir = 5; break;
+	case 3: dir = 1; break;
+	case 1: dir = 3; break;
+	case 2: dir = 0; break;
+	case 0: dir = 2; break;
+	}
+	return dir;
+}
 int GMath::Clamp(int value,int min,int max)
 {
 	if(value < min )value=min;

@@ -17,6 +17,7 @@ public:
 	static int Astar_GetDirUseInt(int degree);
 	static int Astar_GetDir(float degree);
 	static int Astar_GetDir4(float degree);
+	static int GetReverseDir(int dir);
 	static int Clamp(int value,int min,int max);
 	static glm::vec3 CubicBezierCurve(glm::vec3 p1, glm::vec3 p2, float t);
 	static glm::vec3 CubicBezierVelocity(glm::vec3 p1, glm::vec3 p2, float t);
