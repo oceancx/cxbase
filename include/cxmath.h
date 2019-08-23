@@ -23,6 +23,7 @@ public:
 	static glm::vec3 CubicBezierVelocity(glm::vec3 p1, glm::vec3 p2, float t);
 	static inline float Meter2Pixel(float meter) { return meter * 100.f * PIXEL_PER_CM; };
 	static int Dir8toDir4(int dir);
+	static int NextDir4(int dir);
 };
 
 namespace utils

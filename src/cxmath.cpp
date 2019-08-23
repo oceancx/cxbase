@@ -189,7 +189,15 @@ int GMath::Dir8toDir4(int dir)
 	if (dir == Direction::W)return Direction::N_W;
 	return dir;
 }
-
+int GMath::NextDir4(int dir)
+{
+	dir = Dir8toDir4(dir);
+	if (dir == Direction::N_E)return Direction::S_E;
+	if (dir == Direction::S_E)return Direction::S_W;
+	if (dir == Direction::S_W)return Direction::N_W;
+	if (dir == Direction::N_W)return Direction::N_E;
+	return dir;
+}
 //
 //float diagonal = 23; //寸
 //float diagonal_cm = 58.42;
