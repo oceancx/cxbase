@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <nlohmann/json.hpp>
+#include <unordered_map>
 using Vec3 = glm::vec3;
 using Vec4 = glm::vec4;
 using Vec2 = glm::vec2;
@@ -21,6 +22,12 @@ using Mat2 = glm::mat2;
 using String = std::string;
 using CXString = std::string;
 using Json = nlohmann::json;
+using std::vector;
+using std::map;
+using std::unordered_map;
+using std::deque;
+using std::list;
+using std::array;
 
 typedef int64_t int64;
 typedef int32_t int32;
