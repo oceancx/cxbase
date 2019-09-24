@@ -23,6 +23,7 @@ using String = std::string;
 using CXString = std::string;
 using Json = nlohmann::json;
 using std::vector;
+using std::string;
 using std::map;
 using std::unordered_map;
 using std::deque;
