@@ -28,7 +28,12 @@ public:
 
 namespace utils
 {
-	inline static bool BoundHitTest(Bound bound, Pos pt) { if (pt.x >= bound.left && pt.x <= bound.right&&pt.y >= bound.top&&pt.y <= bound.bottom)return true; else return false; }
+	inline static bool BoundHitTest(Bound bound, Pos pt) { 
+		if (pt.x >= bound.left && pt.x <= bound.right&&pt.y >= bound.top&&pt.y <= bound.bottom)
+			return true; 
+		else 
+			return false; 
+	}
 	inline static bool BoundHitTest(Bound b1, Bound b2) { if (b1.right < b2.left || b1.left > b2.right || b1.bottom < b2.top || b1.top >  b2.bottom)return false; else return true; }
 }
 
