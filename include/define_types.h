@@ -24,12 +24,13 @@ using CXString = std::string;
 using Json = nlohmann::json;
 using std::vector;
 using std::string;
+using std::shared_ptr;
 using std::map;
 using std::unordered_map;
 using std::deque;
 using std::list;
 using std::array;
-
+using std::make_shared;
 typedef int64_t int64;
 typedef int32_t int32;
 typedef int16_t int16;
