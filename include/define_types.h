@@ -31,6 +31,7 @@ using std::deque;
 using std::list;
 using std::array;
 using std::make_shared;
+using std::function;
 typedef int64_t int64;
 typedef int32_t int32;
 typedef int16_t int16;
