@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
 #include <sstream>
+#include <memory>
 #include <nlohmann/json.hpp>
 #include <unordered_map>
 using Vec3 = glm::vec3;
