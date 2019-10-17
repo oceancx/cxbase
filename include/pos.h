@@ -9,7 +9,18 @@ struct Pos
         this->x =x;
         this->y = y;
     }
+	Pos& operator+(const Pos& pos){
+		this->x += pos.x;
+		this->y += pos.y;
+		return *this;
+	}
+	Pos& operator-(const Pos& pos) {
+		this->x -= pos.x;
+		this->y -= pos.y;
+		return *this;
+	}
 };
+
 
 struct IntPos
 {
