@@ -12,7 +12,8 @@ enum EProtocalType
 	PTO_C2C_CHAT,
 	PTO_C2C_SAVE_PLAYER_DATABASE,
 	PTO_C2S_DOSTRING,
-	PTO_C2S_COMBAT_START
+	PTO_C2S_COMBAT_START,
+	PTO_C2S_COMBAT_CMD
 };
 
 void luaopen_protocol(lua_State* L);

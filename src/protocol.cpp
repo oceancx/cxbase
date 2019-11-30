@@ -12,6 +12,7 @@ void luaopen_protocol(lua_State* L)
 	REG_ENUM(PTO_C2C_SAVE_PLAYER_DATABASE);
 	REG_ENUM(PTO_C2S_DOSTRING);
 	REG_ENUM(PTO_C2S_COMBAT_START);
+	REG_ENUM(PTO_C2S_COMBAT_CMD);
 #undef REG_ENUM
 	(lua_pushinteger(L, CX_MSG_HEADER_LEN), lua_setglobal(L, "CX_MSG_HEADER_LEN"));
 
